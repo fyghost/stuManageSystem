@@ -1,5 +1,7 @@
 package com.cnc.spring.DAO;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.hibernate.Query;
@@ -49,4 +51,9 @@ public class StudentDAOImpl implements StudentDAO {
 		query.executeUpdate();
 	}
 	
+	@Override
+	public List<Student> getStudents() {
+		List<Student> students = (List<Student>)getSession().createQuery("from Student").list();
+		return students;
+	}
 }

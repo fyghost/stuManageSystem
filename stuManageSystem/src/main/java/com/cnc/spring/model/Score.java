@@ -1,6 +1,9 @@
 package com.cnc.spring.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -8,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="score")
-public class Score {
+public class Score implements Serializable {
 	int id;
 	private Double score;
 	private Student student;
@@ -28,7 +31,7 @@ public class Score {
 		this.score = score;
 	}
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="student_id")
 	public Student getStudent() {
 		return student;
@@ -36,7 +39,7 @@ public class Score {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="course_id")
 	public Course getCourse() {
 		return course;

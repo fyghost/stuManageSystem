@@ -22,7 +22,7 @@ public class AdminDAO {
 	}
 	
 	public void deleteAdmin(String username) {
-		Admin admin = (Admin)getSession().load(Admin.class, username);
+		Admin admin = (Admin)getSession().get(Admin.class, username);
 		if(admin == null) {
 			return;
 		}
@@ -31,7 +31,7 @@ public class AdminDAO {
 	}
 	
 	public void updateAdmin(String username, String password) {
-		Admin a = (Admin)getSession().load(Admin.class, username);
+		Admin a = (Admin)getSession().get(Admin.class, username);
 		if(a == null)
 			return;
 		String hql = "update Admin a set a.password=" + password + 

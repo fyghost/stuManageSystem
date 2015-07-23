@@ -25,8 +25,8 @@
 	    <property name="username" value="root"></property>  
 	    <property name="password" value="123"></property>
     </bean>  
-    <mvc:interceptors> 
-        <!-- 开启openSessionInView -->
+<!--     <mvc:interceptors> 
+        开启openSessionInView
         <bean class="org.springframework.orm.hibernate4.support.OpenSessionInViewInterceptor">  
           <property name="sessionFactory" ref="sessionFactory" />  
         </bean>
@@ -34,6 +34,12 @@
     
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+     -->
+    	<!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+	<tx:annotation-driven/>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory"><ref local="sessionFactory"/></property>
     </bean>
     
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">  

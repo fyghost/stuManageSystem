@@ -28,8 +28,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<tr>
 				<td>
 					<select name="user">
-						<option value="admin">管理员</option>
 						<option value="student" selected="selected">学生</option>
+						<option value="teacher">教师</option>
+						<option value="admin">管理员</option>
 					</select>
 				</td>
 				<td>

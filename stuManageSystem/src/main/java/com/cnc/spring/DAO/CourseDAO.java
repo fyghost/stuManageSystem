@@ -1,5 +1,7 @@
 package com.cnc.spring.DAO;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.hibernate.Session;
@@ -34,10 +36,17 @@ public class CourseDAO {
 	}
 	
 	public void updateCourse(Course course) {
-		int id = course.getId();
-		String name = course.getName();
-		
-		String hql = "update Course c set c.name=" + name + " where c.id=" + id;
-		getSession().createQuery(hql).executeUpdate();
+		Course c = getCourse(course.getId());
+		c.setName(course.getName());
+		c.setTeacher(course.getTeacher());
+		getSession().update(c);
+	}
+	
+	public List<Course> getCourses() {
+		return getSession().createQuery("from Course").list();
+	}
+	
+	public List<Course> getCourses(String teacher_id) {
+		return getSession().createQuery("from Course where id=" + teacher_id).list();
 	}
 }

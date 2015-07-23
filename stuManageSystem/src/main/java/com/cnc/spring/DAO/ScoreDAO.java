@@ -1,6 +1,7 @@
 package com.cnc.spring.DAO;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -72,4 +73,13 @@ public class ScoreDAO {
 		}
 		return scoreTable;
 	} 
+	
+	public List<Student> listStudents(int course_id) {
+		return (List<Student>)getSession().createQuery("from Score where course_id=" + course_id).list();
+	}
+	
+	public List<Course> listCourses(String student_id) {
+		return (List<Course>)getSession().createQuery("from Score where student_id=" + student_id).list();
+	}
+	
 }

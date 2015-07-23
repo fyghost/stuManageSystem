@@ -20,15 +20,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}); */
 	
 	
-	function addStu() {
-		$("#addStu").show();
-		$("#addTea").hide();
+	function addU() {
+		$("#list_user").hide();
+		$("#addUser").show();
 	}
-	function addTea() {
-		$("#addStu").hide();
-		$("#addTea").show();
-	}
-	
 	function addColumn() {
 		
 	}
@@ -37,15 +32,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>管理员界面</title>
 </head>
 <body align="center">
-	<p id="abc" >您好，管理员</p>
-	<button value="button" onclick="addStu()">添加学生</button>
-	<button value="button" onclick="addTea()">添加老师</button> <br/>
-	<div id="message" align="left">
-	<form action="student/add" id="addStu" style="display: none" method="post">
-		<table boder=1 >
+	<p >您好，管理员</p>
+	<button value="button" onclick="addU()">添加用户</button><br />
+	<button value="button" onclick="listStudent()" >删除学生</button>
+	<button value="button" onclick="listTeacher()" >删除老师</button><br/>
+	<div id="main_area" align="center">
+	<form action="user/add" id="addUser" style="display: none" method="post">
+		<table border=1 >
 			<tr>
 				<td>
-					学号
+					学号/教工号
 				</td>
 				<td>
 					姓名
@@ -53,43 +49,94 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
 			<tr>
 				<td>
-					<input id="student_id"type="text" name="id"/>
+					<input id="id"type="text" name="id"/>
 				</td>
 				<td>
-					<input id="student_name" type="text" name="name"/>
+					<input id="name" type="text" name="name"/>
 				</td>
 			</tr>
 			<tr>
 				<td align="center">
-					<input id="addColum" type="button" onclick="addColumn()" value="增加一栏">
+					<input type="radio" name="user" value="student" checked="checked" >学生
+					<input type="radio" name="user" value="teacher" >老师
 				</td>
 				<td align="center">
-					<input id="addStudent" type="button" onclick="addStudent1()" value="提交"/>
+					<input type="button" onclick="addUser()" value="提交"/>
 				</td>
 			</tr>
 		</table>
 	</form>
+	<div id="add_success" style="display:none">添加成功</div>
 	</div>
+	<div id="list_user">
+	</div>
+	
 
 <script type="text/javascript">
 	//$(document).ready(function(){
-		function addStudent1() {
-			$.ajax({
-                type: "POST",
-                url:$("#addStu").attr("action"),
-                data:$('#addStu').serialize(),// 你的formid
-                error: function() {
-                    alert("Connection error");
-                },
-                success: function(data) {
-                	$("#student_id").attr("value", "");
-                	$("#student_name").attr("value", "");
-                }
-            });
-			$("#addTea").hide();
-		}
+	function addUser() {
+		
+		$.ajax({
+               type: "POST",
+               url:$("#addUser").attr("action"),
+               data:$('#addUser').serialize(),
+               error: function() {
+                   alert("Connection error");
+               },
+               success: function(data) {
+               	$("#id").attr("value", "");
+               	$("#name").attr("value", "");
+               	$("#add_success").show();
+               }
+           });
+	}
+	
+	function listStudent() {
+		$("#addUser").hide();
+		$("#list_user").show();
+		$.ajax({
+			type: "GET",
+			url:"student/list",
+			error: function() {
+			    alert("Connection error");
+			},
+			success: function(data) {
+				var table = "<h4>学生列表</h4><br><table border='1' align='center'><tr><th>学号</th><th>姓名</th><th></th></tr>";
+	            console.log(data.length);
+	            for(i=0;i<data.length;i++){
+	                //json.id
+	            	table += "<tr><td>"+data[i].id+"</td><td>"+data[i].name+"</td><td><a href='student/delete/" + data[i].id + "'>删除</td></tr>";
+	        	}
+	            table += "</table>";
+	            console.log(table);
+	            
+	            $("#list_user").html(table);
+			}
+        });
+	}
+	function listTeacher() {
+		$("#addUser").hide();
+		$("#list_user").show();
+		$.ajax({
+			type: "GET",
+			url:"teacher/list",
+			error: function() {
+			    alert("Connection error");
+			},
+			success: function(data) {
+				var table = "<h4>教师列表</h4><br><table id='teacher_table' border='1' align='center'><tr><th>教工号</th><th>姓名</th><th></th></tr>";
+	            console.log(data.length);
+	            for(i=0;i<data.length;i++){
+	                //json.id
+	            	table += "<tr><td>"+data[i].id+"</td><td>"+data[i].name+"</td><td><a href='teacher/delete/" + data[i].id + "'>删除</td></tr>";
+	        	}
+	            table += "</table>";
+	            console.log(table);
+	            $("#list_user").html(table);
+			}
+        });
+	}
 //	});
-
 </script>
 
 </body>

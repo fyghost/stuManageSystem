@@ -5,27 +5,21 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="student")
-public class Student{
+@JsonIgnoreProperties (value={"scores", "password"})  
+public class Student {
 	private String id;
 	private String name;
 	private String password;
 	private Set<Score> scores = new HashSet<Score>();
-	
-	public Student() {
-		
-	}
-	
-	public Student(String id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
-	}
 	
 	@Id
 	public String getId() {
@@ -36,7 +30,8 @@ public class Student{
 	}
 	
 	@OneToMany(mappedBy="student",
-			cascade={CascadeType.ALL}
+			cascade={CascadeType.ALL},
+			fetch=FetchType.EAGER
 			)
 	public Set<Score> getScores() {
 		return scores;
