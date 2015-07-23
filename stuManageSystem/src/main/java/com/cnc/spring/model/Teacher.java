@@ -40,7 +40,7 @@ public class Teacher {
 	}
 	@OneToMany(mappedBy="teacher",
 			cascade={CascadeType.ALL},
-			fetch=FetchType.EAGER
+			fetch=FetchType.LAZY
 			)
 	public Set<Course> getCourses() {
 		return courses;

@@ -43,12 +43,6 @@ public class CourseService {
 	public Course getCourse(int id) {
 		return courseDAO.getCourse(id);
 	}
-
-	
-	@Transactional
-	public List<Course> listCourses() {
-		return courseDAO.getCourses();
-	}
 	
 	@Transactional
 	public List<Course> listCourses(String teacher_id) {

@@ -47,6 +47,6 @@ public class CourseDAO {
 	}
 	
 	public List<Course> getCourses(String teacher_id) {
-		return getSession().createQuery("from Course where id=" + teacher_id).list();
+		return getSession().createQuery("from Course where teacher_id=" + teacher_id).list();
 	}
 }

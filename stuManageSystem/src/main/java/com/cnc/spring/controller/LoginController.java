@@ -50,9 +50,9 @@ public class LoginController {
 			return new ModelAndView("login").addObject("message", "√‹¬Î¥ÌŒÛ!");
 		} else {
 			logger.info("login success");
-			ModelAndView mav = new ModelAndView("loginSuccess");
+			ModelAndView mav = new ModelAndView("studentView");
 			mav.addObject("student", student);
-			return new ModelAndView("studentView");
+			return mav;
 		}
 	}
 	

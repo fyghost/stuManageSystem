@@ -1,6 +1,7 @@
 package com.cnc.spring.DAO;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,10 @@ public class ScoreDAO {
 	
 	public void saveScoreItem(Student student, Course course) {
 		Score score = new Score();
+		System.out.println(student.getName());
+		System.out.println(course.getName());
 		score.setCourse(course);
+		
 		student.getScores().add(score);
 		score.setStudent(student);
 		getSession().save(score);
@@ -74,12 +78,18 @@ public class ScoreDAO {
 		return scoreTable;
 	} 
 	
-	public List<Student> listStudents(int course_id) {
-		return (List<Student>)getSession().createQuery("from Score where course_id=" + course_id).list();
+	public List<Score> getScores(int course_id) {
+		return (List<Score>)getSession().createQuery("from Score where course_id=" + course_id).list();
 	}
 	
-	public List<Course> listCourses(String student_id) {
-		return (List<Course>)getSession().createQuery("from Score where student_id=" + student_id).list();
+	public List<Score> getScores(String student_id) {
+		return (List<Score>)getSession().createQuery("from Score where student_id=" + student_id).list();
 	}
 	
+	public boolean isSelected(String student_id, int course_id) {
+		Iterator it = getSession().createQuery("from Score where student_id=" + student_id + " and course_id=" + course_id).iterate();
+		if(it.hasNext())
+			return true;
+		return false;
+	}
 }

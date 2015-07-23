@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -22,6 +23,8 @@ public class Course implements Serializable {
 	private int id;
 	private String name;
 	private Teacher teacher;
+	private String teacher_name;
+	private short selected = 1;
 	private Set<Score> scores = new HashSet<Score>();
 	
 	@Id
@@ -38,12 +41,13 @@ public class Course implements Serializable {
 		this.name = name;
 	}
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="teacher_id")
 	public Teacher getTeacher() {
 		return teacher;
 	}
 	public void setTeacher(Teacher teacher) {
+		setTeacher_name(teacher.getName());
 		this.teacher = teacher;
 	}
 	
@@ -57,5 +61,18 @@ public class Course implements Serializable {
 	public void setScores(Set<Score> scores) {
 		this.scores = scores;
 	}
-	
+	@Transient
+	public String getTeacher_name() {
+		return teacher_name;
+	}
+	public void setTeacher_name(String teacher_name) {
+		this.teacher_name = teacher_name;
+	}
+	@Transient
+	public short getSelected() {
+		return selected;
+	}
+	public void setSelected(short selected) {
+		this.selected = selected;
+	}
 }
