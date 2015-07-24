@@ -32,7 +32,7 @@ public class LoginController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(GradeController.class);
 	
-	@RequestMapping(value="login")
+	@RequestMapping(value={"login", "/"})
 	public String login() {
 		logger.info("Login page");
 		return "login";

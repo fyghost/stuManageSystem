@@ -1,5 +1,6 @@
 package com.cnc.spring.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="student")
 @JsonIgnoreProperties (value={"scores", "password"})  
-public class Student {
+public class Student implements Serializable {
 	private String id;
 	private String name;
 	private String password;
@@ -31,7 +32,7 @@ public class Student {
 	
 	@OneToMany(mappedBy="student",
 			cascade={CascadeType.ALL},
-			fetch=FetchType.EAGER
+			fetch=FetchType.LAZY
 			)
 	public Set<Score> getScores() {
 		return scores;

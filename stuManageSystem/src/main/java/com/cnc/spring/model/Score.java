@@ -17,12 +17,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value={"student", "course"})
 public class Score implements Serializable {
 	int id;
-	private Double score;
+	private double score;
 	private Student student;
 	private Course course;
 	private int course_id;
 	private String course_name;
 	private String student_name;
+	private String student_id;
 	private String teacher_name;
 	
 	@Id
@@ -32,10 +33,10 @@ public class Score implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Double getScore() {
+	public double getScore() {
 		return score;
 	}
-	public void setScore(Double score) {
+	public void setScore(double score) {
 		this.score = score;
 	}
 	
@@ -45,6 +46,7 @@ public class Score implements Serializable {
 		return student;
 	}
 	public void setStudent(Student student) {
+		this.student_id = student.getId();
 		this.student_name = student.getName();
 		this.student = student;
 	}
@@ -89,6 +91,14 @@ public class Score implements Serializable {
 	public void setCourse_id(int course_id) {
 		this.course_id = course_id;
 	}
+	@Transient
+	public String getStudent_id() {
+		return student_id;
+	}
+	public void setStudent_id(String student_id) {
+		this.student_id = student_id;
+	}
+	
 	
 	
 }

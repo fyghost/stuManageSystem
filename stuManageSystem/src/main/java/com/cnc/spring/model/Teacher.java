@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties (value={"password"}) 
+@JsonIgnoreProperties (value={"password", "courses"}) 
 public class Teacher {
 	private String id;
 	private String name;

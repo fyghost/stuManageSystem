@@ -1,7 +1,6 @@
 package com.cnc.spring.service;
 
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -9,9 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cnc.spring.DAO.ScoreDAO;
-import com.cnc.spring.DAO.TeacherDAO;
 import com.cnc.spring.model.Course;
 import com.cnc.spring.model.Score;
+import com.cnc.spring.model.ScoreVO;
 import com.cnc.spring.model.Student;
 /*
  * 分数上就不需要CRUD，只需要查询和更新，增加删除的话会联动
@@ -38,5 +37,10 @@ public class ScoreService {
 		scoreDAO.updateScore(student_id, course_id, score);
 		return 0;
 	}
+	@Transactional
+	public void updateScore(ScoreVO s) {
+		scoreDAO.setScore(s);
+	}
+	
 	
 }

@@ -70,7 +70,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 	<div id="list_user">
 	</div>
-	
+	<div align="right">
+		<a href="login" >»Øµ½Ö÷Ò³</a>
+	</div>
 
 <script type="text/javascript">
 	//$(document).ready(function(){

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.cnc.spring.model.Course;
 import com.cnc.spring.model.Score;
+import com.cnc.spring.model.ScoreVO;
 import com.cnc.spring.model.Student;
 
 @Component
@@ -35,13 +36,17 @@ public class ScoreDAO {
 		getSession().save(score);
 	}
 	
-	public Score getScore(String studentId, int courseId) {
-		Student student = (Student)getSession().get(Student.class, studentId);
+	public Score getScore(String student_id, int course_id) {
+		Student student = (Student)getSession().get(Student.class, student_id);
 		for(Score sc: student.getScores()) {
-			if(sc.getCourse().getId() == courseId)
+			if(sc.getCourse().getId() == course_id)
 				return sc;
 		}
 		return null;
+	}
+	public Score getScore(int score_id) {
+		System.out.println("break");
+		return (Score)getSession().get(Score.class, score_id);
 	}
 	
 	public void updateScore(String student_id, int course_id, double score) {
@@ -91,5 +96,12 @@ public class ScoreDAO {
 		if(it.hasNext())
 			return true;
 		return false;
+	}
+	
+	public void setScore(ScoreVO s) {
+		Score score = getScore(s.getScore_id());
+		
+		score.setScore(s.getScore());
+		getSession().update(score);
 	}
 }

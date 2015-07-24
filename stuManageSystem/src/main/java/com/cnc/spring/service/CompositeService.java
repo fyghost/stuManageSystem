@@ -42,28 +42,8 @@ public class CompositeService {
 	}
 	
 	@Transactional
-	public List<Course> listCoursesByStu(String student_id) {
-		List<Score> scores = scoreDAO.getScores(student_id);
-		List<Course> courses = new ArrayList<Course>();
-		for(Score s: scores) {
-			courses.add(s.getCourse());
-		}
-		return courses;
-	}
-	
-	@Transactional
 	public List<Course> listCourses() {
 		return courseDAO.getCourses();
-	}
-	
-	@Transactional
-	public List<Student> listStudentsByCourse(int course_id) {
-		List<Score> scores = scoreDAO.getScores(course_id);
-		List<Student> students = new ArrayList<Student>();
-		for(Score s: scores) {
-			students.add(s.getStudent());
-		}
-		return students;
 	}
 	
 	@Transactional
