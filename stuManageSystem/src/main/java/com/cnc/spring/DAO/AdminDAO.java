@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 
 import com.cnc.spring.model.Admin;
-
+//pull test
 @Component
 public class AdminDAO {
 	@Resource
