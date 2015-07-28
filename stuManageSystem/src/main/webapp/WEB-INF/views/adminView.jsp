@@ -22,10 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	function addU() {
 		$("#list_user").hide();
-		$("#addUser").show();
-	}
-	function addColumn() {
-		
+		$("#main_area").show();
 	}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=GB18030">
@@ -37,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<button value="button" onclick="listStudent()" >删除学生</button>
 	<button value="button" onclick="listTeacher()" >删除老师</button><br/>
 	<div id="main_area" align="center">
-	<form action="user/add" id="addUser" style="display: none" method="post">
+	<form action="user/add" id="addUser" method="post">
 		<table border=1 >
 			<tr>
 				<td>
@@ -94,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	
 	function listStudent() {
-		$("#addUser").hide();
+		$("#main_area").hide();
 		$("#list_user").show();
 		$.ajax({
 			type: "GET",
@@ -117,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
 	}
 	function listTeacher() {
-		$("#addUser").hide();
+		$("#main_area").hide();
 		$("#list_user").show();
 		$.ajax({
 			type: "GET",

@@ -36,6 +36,9 @@
 	
 	<context:component-scan base-package="com.cnc.spring.controller" />
 	
+	<interceptors>
+		<beans:bean class="com.cnc.spring.interceptor.LoginInterceptor"></beans:bean>
+	</interceptors>
 	
 	
 </beans:beans>

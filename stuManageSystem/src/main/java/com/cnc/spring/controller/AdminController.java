@@ -17,6 +17,8 @@ import com.cnc.spring.model.Student;
 import com.cnc.spring.model.Teacher;
 import com.cnc.spring.service.StudentService;
 import com.cnc.spring.service.TeacherService;
+import com.cnc.spring.validation.Login;
+import com.cnc.spring.validation.ResultTypeEnum;
 
 /*
  * Admin实现管理员的基本功能，增加删除学生或老师
@@ -28,8 +30,9 @@ public class AdminController {
 	@Resource
 	private TeacherService teacherService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(GradeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
+	@Login(ResultTypeEnum.json)
 	@RequestMapping(value="user/add", params="user=student", method=RequestMethod.POST)
 	public @ResponseBody String addStudent(@RequestParam("id") String id, @RequestParam("name") String name) {
 		logger.info("adding a new student");
@@ -43,6 +46,7 @@ public class AdminController {
 		return message;
 	}
 	
+	@Login(ResultTypeEnum.json)
 	@RequestMapping(value="user/add", params="user=teacher", method=RequestMethod.POST)
 	public @ResponseBody String addTeacher(@RequestParam("id") String id, @RequestParam("name") String name) {
 		logger.info("adding a new teacher");
@@ -56,6 +60,7 @@ public class AdminController {
 		return message;
 	}
 	
+	@Login(ResultTypeEnum.json)
 	@RequestMapping("student/list")
 	public @ResponseBody List<Student> listStudents() {
 		logger.info("listing students");
@@ -66,6 +71,7 @@ public class AdminController {
 //		return students.get(0);
 	}
 	
+	@Login(ResultTypeEnum.json)
 	@RequestMapping("teacher/list")
 	public @ResponseBody List<Teacher> listTeachers() {
 		logger.info("listing teachers");
@@ -75,6 +81,7 @@ public class AdminController {
 		return teachers;
 	}
 	
+	@Login(ResultTypeEnum.json)
 	@RequestMapping("teacher/delete/{id}")
 	public @ResponseBody String deleteTeacher(@PathVariable("id") String teacher_id) {
 		logger.info("deleting teacher");
@@ -85,6 +92,8 @@ public class AdminController {
 		String message = "Teacher deleted";
 		return message;
 	}
+	
+	@Login(ResultTypeEnum.json)
 	@RequestMapping("student/delete/{id}")
 	public @ResponseBody String deleteStudent(@PathVariable("id") String student_id) {
 		logger.info("deleting teacher");
