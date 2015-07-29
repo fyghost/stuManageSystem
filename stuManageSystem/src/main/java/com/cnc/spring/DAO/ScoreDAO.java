@@ -55,33 +55,44 @@ public class ScoreDAO {
 		getSession().createQuery(hql).executeUpdate();
 	}
 	
+	public void deleteScore(int id) {
+		getSession().createQuery("delete Score s where s.id=" + id).executeUpdate();
+	}
+	
 	public void deleteScore(String student_id, int course_id) {
 		Score score = getScore(student_id, course_id);
 		String hql = "delete Score sc where sc.id=" + score.getId();
 		getSession().createQuery(hql).executeUpdate();
 	}
 	
-	public Map<Course, Double> studentScoreMap(String studentId) {
-		Student student = (Student)getSession().get(Student.class, studentId);
-		if(student == null)
-			return null;
-		Map<Course, Double> scoreTable = new HashMap<Course, Double>();
-		for(Score sc:student.getScores()) {
-			scoreTable.put(sc.getCourse(), sc.getScore());
+	public void deleteScores(int course_id) {
+		List<Score> scores = getScores(course_id);
+		for(Score s: scores) {
+			deleteScore(s.getId());
 		}
-		return scoreTable;
 	}
-
-	public Map<Student, Double> courseScoreMap(int courseId) {
-		Course course = (Course)getSession().get(Course.class, courseId);
-		if(course == null)
-			return null;
-		Map<Student, Double> scoreTable = new HashMap<Student, Double>();
-		for(Score sc:course.getScores()) {
-			scoreTable.put(sc.getStudent(), sc.getScore());
-		}
-		return scoreTable;
-	} 
+	
+//	public Map<Course, Double> studentScoreMap(String studentId) {
+//		Student student = (Student)getSession().get(Student.class, studentId);
+//		if(student == null)
+//			return null;
+//		Map<Course, Double> scoreTable = new HashMap<Course, Double>();
+//		for(Score sc:student.getScores()) {
+//			scoreTable.put(sc.getCourse(), sc.getScore());
+//		}
+//		return scoreTable;
+//	}
+//
+//	public Map<Student, Double> courseScoreMap(int courseId) {
+//		Course course = (Course)getSession().get(Course.class, courseId);
+//		if(course == null)
+//			return null;
+//		Map<Student, Double> scoreTable = new HashMap<Student, Double>();
+//		for(Score sc:course.getScores()) {
+//			scoreTable.put(sc.getStudent(), sc.getScore());
+//		}
+//		return scoreTable;
+//	} 
 	
 	public List<Score> getScores(int course_id) {
 		return (List<Score>)getSession().createQuery("from Score where course_id=" + course_id).list();

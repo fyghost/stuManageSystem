@@ -24,7 +24,6 @@ import com.cnc.spring.validation.ResultTypeEnum;
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private final Logger log = LoggerFactory.getLogger(LoginInterceptor.class);
-	static final String page = "http://localhost:8080/stuManageSystem/login";
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request,

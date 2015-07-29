@@ -20,14 +20,14 @@ public class ScoreService {
 	@Resource
 	private ScoreDAO scoreDAO;
 	
-	@Transactional
-	public Map<Course, Double> showStudentScores(String studentId) {
-		return scoreDAO.studentScoreMap(studentId);
-	}
-	@Transactional
-	public Map<Student, Double> showCourseScores(int courseId) {
-		return scoreDAO.courseScoreMap(courseId);
-	}
+//	@Transactional
+//	public Map<Course, Double> showStudentScores(String studentId) {
+//		return scoreDAO.studentScoreMap(studentId);
+//	}
+//	@Transactional
+//	public Map<Student, Double> showCourseScores(int courseId) {
+//		return scoreDAO.courseScoreMap(courseId);
+//	}
 	@Transactional
 	public int updateScore(String student_id, int course_id, double score) {
 		Score sc = scoreDAO.getScore(student_id, course_id);

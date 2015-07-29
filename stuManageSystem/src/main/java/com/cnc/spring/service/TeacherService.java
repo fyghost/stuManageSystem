@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cnc.spring.DAO.ScoreDAO;
 import com.cnc.spring.DAO.TeacherDAO;
 import com.cnc.spring.model.Course;
 import com.cnc.spring.model.Teacher;
@@ -16,6 +17,8 @@ import com.cnc.spring.model.Teacher;
 public class TeacherService {
 	@Resource
 	private TeacherDAO teacherDAO;
+	@Resource
+	private ScoreDAO scoreDAO;
 	
 	@Transactional
 	public Teacher getTeacher(String id) {
@@ -24,6 +27,10 @@ public class TeacherService {
 	
 	@Transactional
 	public void deleteTeacher(String teacher_id) {
+		Set<Course> courses = teacherDAO.getCourses(teacher_id);
+		for(Course c: courses) {
+			scoreDAO.deleteScore(c.getId());
+		}
 		teacherDAO.deleteTeacher(teacher_id);
 	}
 	

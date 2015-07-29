@@ -120,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function listStudents(course_id, course_name) {
 		s_id = course_id;
 		s_name = course_name;
-		var listUrl = "student/list/" + i;
+		var listUrl = "student/list/" + s_id;
 		$("#addCourse").hide();
 		$("#list_user").show();
 		$.ajax({
@@ -130,7 +130,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    alert("Connection error");
 			},
 			success: function(data) {
-				var table = "<h4>课程：" + name + "</h4><br><form id='student_table'><table border='1' align='center'><tr><th>学号</th><th>姓名</th><th>成绩</th></tr>";
+				var table = "<h4>课程：" + course_name + "   课程号：" + course_id + "</h4><br><form id='student_table'><table border='1' align='center'><tr><th>学号</th><th>姓名</th><th>成绩</th></tr>";
 	            console.log(data.length);
 	            for(i=0;i<data.length;i++){
 	            	var message;

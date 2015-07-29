@@ -65,4 +65,5 @@ public class CompositeService {
 	public List<Score> listScores(int course_id) {
 		return scoreDAO.getScores(course_id);
 	}
+	
 }
