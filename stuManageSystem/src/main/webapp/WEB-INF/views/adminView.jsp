@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=GB18030"
-    pageEncoding="GB18030"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -25,23 +25,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$("#main_area").show();
 	}
 </script>
-<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-<title>¹ÜÀíÔ±½çÃæ</title>
+<meta http-equiv="Content-Type" content="text/html; utf-8">
+<title>ç®¡ç†å‘˜ç•Œé¢</title>
 </head>
 <body align="center">
-	<p >ÄúºÃ£¬¹ÜÀíÔ±</p>
-	<button value="button" onclick="addU()">Ìí¼ÓÓÃ»§</button><br />
-	<button value="button" onclick="listStudent()" >É¾³ıÑ§Éú</button>
-	<button value="button" onclick="listTeacher()" >É¾³ıÀÏÊ¦</button><br/>
+	<p >æ‚¨å¥½ï¼Œç®¡ç†å‘˜</p>
+	<button value="button" onclick="addU()">æ·»åŠ ç”¨æˆ·</button><br />
+	<button value="button" onclick="listStudent()" >åˆ é™¤å­¦ç”Ÿ</button>
+	<button value="button" onclick="listTeacher()" >åˆ é™¤è€å¸ˆ</button><br/>
 	<div id="main_area" align="center">
 	<form action="user/add" id="addUser" method="post">
 		<table border=1 >
 			<tr>
 				<td>
-					Ñ§ºÅ/½Ì¹¤ºÅ
+					å­¦å·/æ•™å·¥å·
 				</td>
 				<td>
-					ĞÕÃû
+					å§“å
 				</td>
 			</tr>
 			<tr>
@@ -54,21 +54,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
 			<tr>
 				<td align="center">
-					<input type="radio" name="user" value="student" checked="checked" >Ñ§Éú
-					<input type="radio" name="user" value="teacher" >ÀÏÊ¦
+					<input type="radio" name="user" value="student" checked="checked" >å­¦ç”Ÿ
+					<input type="radio" name="user" value="teacher" >è€å¸ˆ
 				</td>
 				<td align="center">
-					<input type="button" onclick="addUser()" value="Ìá½»"/>
+					<input id="addButton" type="button" onclick="addUser()" value="æäº¤"/>
 				</td>
 			</tr>
 		</table>
 	</form>
-	<div id="add_success" style="display:none">Ìí¼Ó³É¹¦</div>
+	<div id="add_success" style="display:none"></div>
 	</div>
 	<div id="list_user">
 	</div>
 	<div align="right">
-		<a href="login" >»Øµ½Ö÷Ò³</a>
+		<a href="login" >å›åˆ°ä¸»é¡µ</a>
 	</div>
 
 <script type="text/javascript">
@@ -85,6 +85,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                success: function(data) {
                	$("#id").attr("value", "");
                	$("#name").attr("value", "");
+               	$("#addButton").attr("value", "ç»§ç»­æ·»åŠ ")
+               	$("#add_success").html(data);
                	$("#add_success").show();
                }
            });
@@ -100,11 +102,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    alert("Connection error");
 			},
 			success: function(data) {
-				var table = "<h4>Ñ§ÉúÁĞ±í</h4><br><table border='1' align='center'><tr><th>Ñ§ºÅ</th><th>ĞÕÃû</th><th></th></tr>";
+				var table = "<h4>å­¦ç”Ÿåˆ—è¡¨</h4><br><table border='1' align='center'><tr><th>å­¦å·</th><th>å§“å</th><th></th></tr>";
 	            console.log(data.length);
 	            for(i=0;i<data.length;i++){
 	                //json.id
-	            	table += "<tr><td>"+data[i].id+"</td><td>"+data[i].name+"</td><td><a href='student/delete/" + data[i].id + "'>É¾³ı</td></tr>";
+	            	table += "<tr><td>"+data[i].id+"</td><td>"+data[i].name+"</td><td><button value='button' onclick='deleteStudent(" + data[i].id + ")'>åˆ é™¤</td></tr>";
 	        	}
 	            table += "</table>";
 	            console.log(table);
@@ -123,17 +125,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    alert("Connection error");
 			},
 			success: function(data) {
-				var table = "<h4>½ÌÊ¦ÁĞ±í</h4><br><table id='teacher_table' border='1' align='center'><tr><th>½Ì¹¤ºÅ</th><th>ĞÕÃû</th><th></th></tr>";
+				var table = "<h4>æ•™å¸ˆåˆ—è¡¨</h4><br><table id='teacher_table' border='1' align='center'><tr><th>æ•™å·¥å·</th><th>å§“å</th><th></th></tr>";
 	            console.log(data.length);
 	            for(i=0;i<data.length;i++){
 	                //json.id
-	            	table += "<tr><td>"+data[i].id+"</td><td>"+data[i].name+"</td><td><a href='teacher/delete/" + data[i].id + "'>É¾³ı</td></tr>";
+	            	table += "<tr><td>"+data[i].id+"</td><td>"+data[i].name+"</td><td><button value='button' onclick='deleteTeacher(" + data[i].id + ")'>åˆ é™¤</td></tr>";
 	        	}
 	            table += "</table>";
 	            console.log(table);
 	            $("#list_user").html(table);
 			}
         });
+	}
+	function deleteTeacher(id) {
+		$.ajax({
+			type:"GET",
+			url: "teacher/delete/" + id,
+			error: function() {
+				alert("Connection error");
+			},
+			success: function(data) {
+				listTeacher();
+			}
+		})
+	}
+	
+	function deleteStudent(id) {
+		$.ajax({
+			type:"GET",
+			url: "student/delete/" + id,
+			error: function() {
+				alert("Connection error");
+			},
+			success: function(data) {
+				listStudent();
+			}
+		})
 	}
 //	});
 </script>

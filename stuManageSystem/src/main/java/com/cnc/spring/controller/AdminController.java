@@ -33,30 +33,34 @@ public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	@Login(ResultTypeEnum.json)
-	@RequestMapping(value="user/add", params="user=student", method=RequestMethod.POST)
+	@RequestMapping(value="user/add", params="user=student", method=RequestMethod.POST, produces="text/htm;charset=UTF-8")
 	public @ResponseBody String addStudent(@RequestParam("id") String id, @RequestParam("name") String name) {
 		logger.info("adding a new student");
+		if(studentService.getStudent(id) != null)
+			return "该用户已经存在！！";
 		Student student = new Student();
 		student.setId(id);
 		student.setName(name);
 		student.setPassword(id);
 		studentService.addStudent(student);
 		System.out.println(id + ":" + name); 
-		String message = "student added";
+		String message = "添加成功";
 		return message;
 	}
 	
 	@Login(ResultTypeEnum.json)
-	@RequestMapping(value="user/add", params="user=teacher", method=RequestMethod.POST)
+	@RequestMapping(value="user/add", params={"user=teacher"}, method=RequestMethod.POST,  produces = "text/html;charset=UTF-8")
 	public @ResponseBody String addTeacher(@RequestParam("id") String id, @RequestParam("name") String name) {
 		logger.info("adding a new teacher");
+		if(teacherService.getTeacher(id) != null)
+			return "该用户已经存在！！";
 		Teacher teacher = new Teacher();
 		teacher.setId(id);
 		teacher.setName(name);
 		teacher.setPassword(id);
 		teacherService.addTeacher(teacher);
 		System.out.println(id + ":" + name); 
-		String message = "teacher added";
+		String message = "添加成功";
 		return message;
 	}
 	
