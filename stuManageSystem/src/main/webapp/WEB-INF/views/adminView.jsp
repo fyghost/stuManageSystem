@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">
-<script type="text/javascript" src="http://code.hs-cn.com/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="resources/jquery-1.7.1.min.js"></script>
 
 <script type="text/javascript">
 /* 	$(document).ready(function(){

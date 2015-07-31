@@ -8,7 +8,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">
-<script type="text/javascript" src="http://code.hs-cn.com/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="resources/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="resources/ajaxfileupload.js"></script>
 
 <script type="text/javascript">
 /* 	$(document).ready(function(){
@@ -33,7 +34,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body align="center">
 	<p >您好，${teacher.name}!</p> 
-	<div align="right">
+	<div style="float:right; margin-right:20px" >
+		<div id="img">
+			<img src="resources/img/teacher/teacher${teacher.id}.jpg"  width=50 height=50 />
+		</div>
+		<form action="teacher/picture/${teacher.id }" id="pic_form"method="post" enctype="multipart/form-data">  
+			上传头像<br>
+			<input name="imgFile" id="img_file" type="file" /><br>
+			<input type="button" onclick="uploadPic('pic_form', 'img_file')" value="确定"/> 
+			<!-- <input type="submit" value="确定"/>  -->
+		</form>  
 		<button value="button" onclick="changePass()">更改密码</button>
 		<form style="display: none" id="pass_form" action="teacher/password/${teacher.id}">
 			新密码：<input type="password" name="passwordNew"><br>
@@ -42,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</form>
 		<label id="change_success"></label>
 	</div>
-	<div align="left" >
+	<div style="float:left; margin-left:20px" >
 		<button value="button" onclick="addC()">添加课程</button><br />
 		<button value="button" onclick="listCourses()" >查看课程</button><br/>
 	</div>
@@ -205,6 +215,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				else if(data == 0) {
 					$("#change_success").html("请输入正确的确认密码");
 				}
+			}
+		})
+	}
+	
+	function uploadPic(form_id, imgFile) {
+		console.log(form_id);
+		console.log(imgFile);
+		$.ajaxFileUpload({
+			url: $("#" + form_id).attr("action"),
+			secureuri: false,
+			fileElementId: imgFile,
+			dataType: 'text',
+			success: function(data) {
+				window.location.reload();				
 			}
 		})
 	}

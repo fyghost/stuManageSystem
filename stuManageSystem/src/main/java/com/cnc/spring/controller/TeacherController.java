@@ -1,8 +1,11 @@
 package com.cnc.spring.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.cnc.spring.model.Course;
 import com.cnc.spring.model.Score;
 import com.cnc.spring.model.ScoreVO;
+import com.cnc.spring.model.Student;
 import com.cnc.spring.model.Teacher;
 import com.cnc.spring.service.CompositeService;
 import com.cnc.spring.service.CourseService;
@@ -92,5 +97,31 @@ public class TeacherController {
 		teacher.setPassword(passwordNew);
 		teacherService.updateTeacher(teacher);
 		return 1;
+	}
+	
+	@Login(ResultTypeEnum.json)
+	@RequestMapping(value="teacher/picture/{teacher_id}", produces="text/html;charset=utf-8")
+	public @ResponseBody String changPic(@PathVariable("teacher_id")String teacher_id, @RequestParam("imgFile") CommonsMultipartFile file,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("Uploading Teacher Images");
+		if (!file.isEmpty()) {
+			String path = request.getSession().getServletContext().getRealPath("/resources/img/teacher");  //获取本地存储路径
+			System.out.println(path);
+			String fileName = file.getOriginalFilename();
+			String fileType = fileName.substring(fileName.lastIndexOf("."));
+			Teacher teacher = teacherService.getTeacher(teacher_id);
+
+			String newFileName = "teacher" + teacher.getId() + fileType;
+			String fileLocation = "/resources/img/teacher" + newFileName;
+			File file2 = new File(path, newFileName); //新建一个文件
+			try {
+			    file.getFileItem().write(file2); //将上传的文件写入新建的文件中
+			} catch (Exception e) {
+			    e.printStackTrace();
+			}
+			return "fileLocation";
+		}else{
+			return "上传失败";
+		}
 	}
 }
