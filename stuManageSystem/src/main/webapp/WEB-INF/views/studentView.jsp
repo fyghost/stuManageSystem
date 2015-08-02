@@ -10,98 +10,77 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <base href="<%=basePath%>">
 <script type="text/javascript" src="resources/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="resources/ajaxfileupload.js"></script>
+<script type="text/javascript" src="resources/myFunction.js"></script>
+<link href="resources/css/mystyle.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
-/* 	$(document).ready(function(){
-		function addStudent1() {
-
-			alert("dgdfg");
-			
-		}
-	}); */
 	
-	var id = ${student.id};
-	/* function addC() {
-		$("#addCourse").show();
-	}
-	function addColumn() {
-		
-	} */
+	var id = '${student.id}';
+	
 	function changePass() {
 		$("#pass_form").show();
+		$("#pic_form").hide();
+	}
+	function changePic() {
+		$("#pass_form").hide();
+		$("#pic_form").show();
+	}
+	function setting() {
+		$("#settings").show();
 	}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=GB18030">
 <title>学生个人管理界面</title>
 </head>
 <body align="center">
-	<p >您好，${student.name}!</p>
-	<div align="right">
-		<button value="button" onclick="changePass()">更改密码</button>
-		<div id="img">
-			<img src="resources/img/student/student${student.id}.jpg"  width=50 height=50 />
-		</div>
-		<form action="student/picture/${student.id }" id="pic_form"method="post" enctype="multipart/form-data">  
+	<div class="mydiv">
+		<h1>
+			您好，${student.name}!
+			<img class="myImg" src="/resources/img/${student.img}" />
+		</h1>
+	</div>
+	<div style="float:left;margin-left:20px">
+		<a onclick="listCourses()" class="button pill">查看所有课程</a><br />
+		<a onclick="selectedCourses()" class="button pill">查看已选课程</a><br/>
+	</div>
+	<div id="list_courses" style="float:left; margin-left:20px">
+	</div>
+	
+	<div style="float:right; margin-left:20px">
+		<button class="button" onclick="setting()">个人设置</button><br>
+		<a class="button" href="login" >回到主页</a>
+	</div>
+	<div id="settings"style="display:none;float:right; margin-left:20px">
+		<button class="button" onclick="changePass()">更改密码</button><br>
+		<button class="button" onclick="changePic()" >更改头像</button>
+	</div>
+	<div style="float:right;margin-right:20px">
+		<form action="student/picture/${student.id }" style="display:none" id="pic_form"method="post" enctype="multipart/form-data">  
 			上传头像<br>
-			<input name="imgFile" id="img_file" type="file" /><br>
-			<input type="button" onclick="uploadPic('pic_form', 'img_file')" value="确定"/> 
-			<!-- <input type="submit" value="确定"/>  -->
+			<table class="hovertable">
+				<tr><td><input name="imgFile" id="img_file" type="file" /></td></tr>
+				<tr><td><input class="button"type="button" onclick="uploadPic('pic_form', 'img_file')" value="确定"/></td></tr>
+			</table> 
 		</form>  
 		<form style="display: none" id="pass_form" action="student/password/${student.id}">
-			新密码：<input type="password" name="passwordNew"><br>
-			密码确认：<input type="password" name="passwordConfirm"><br>
-			<input type="submit" onclick="changePassword()" value="确认">
+			<table class="hovertable">
+				<tr><td>新密码：</td><td><input class="text1" type="password" name="passwordNew"></td></tr>
+				<tr><td>密码确认：</td><td><input class="text1" type="password" name="passwordConfirm"></td></tr>
+				<tr>
+					<td id="status"></td>
+					<td><input type="button" class="button"onclick="changePassword()" value="确认"></td>
+				</tr>
+			</table>
 		</form>
 		<label id="change_success"></label>
 	</div>
-	<div align="left">
-		<button value="button" onclick="listCourses()">查看所有课程</button><br />
-		<button value="button" onclick="selectedCourses()" >查看已选课程</button><br/>
-	</div>
-	<div id="main_area" align="center">
-	</div>
-	<div id="list_user" align="right">
-		<a href="login" >回到主页</a>
-	</div>
+	
 	
 
 <script type="text/javascript">
 	//$(document).ready(function(){
-	
-	
-	function listCourses() {
-		var listUrl = "student/courses/" + id;
-		/* $("#addCourse").hide();
-		$("#list_user").show(); */
-		$.ajax({
-			type: "GET",
-			url: listUrl,
-			error: function() {
-			    alert("Connection error");
-			},
-			success: function(data) {
-				var table = "<h4>课程</h4><br><table border='1' align='center'><tr><th>课程号</th><th>课名</th><th>教师</th><th>选课情况</th></tr>";
-	            console.log(data.length);
-	            var message;
-	            for(i=0;i<data.length;i++){
-	                //json.id
-	                if(data[i].selected == 0) {
-	                	message = "<input type=button onclick='selectCourse(" + data[i].id + ")' value='选课'>";
-	                } else {
-	                	message = "已选 <input type=button onclick='deleteCourse(" + data[i].id + ")' value='删除'>";
-	                }
-	            	table += "<tr><td>"+data[i].id+"</td><td>"+data[i].name+"</td><td>" + data[i].teacher_name + "</td><td id=" + data[i].id + ">" + message + "</td></tr>";
-	        	}
-	            table += "</table>";
-	            console.log(table);
-	            
-	            $("#main_area").html(table); 
-			}
-        });
-	}
-	
 	function selectCourse(course_id) {
-		var listUrl = "select/course/0" + id + "/" + course_id;
+		var listUrl = "select/course/" + id + "/" + course_id;
 		console.log(listUrl);
 		$.ajax({
 			type: "GET",
@@ -110,14 +89,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				alert("Connection error");
 			},
 			success: function(data) {
-				message = "已选 <input type=button onclick='deleteCourse(" + course_id + ")' value='删除'>";
+				message = "已选 <input class='button' type=button onclick='deleteCourse(" +
+						course_id + ")' value='删除'>";
 				$("#" + course_id).html(message);
 			}
 		});
 	}
 	
-	function selectedCourses() {
-		var listUrl = "student/course/0" + id;
+	function listCourses() {
+		var listUrl = "student/courses/" + id;
 		$.ajax({
 			type: "GET",
 			url: listUrl,
@@ -125,25 +105,63 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    alert("Connection error");
 			},
 			success: function(data) {
-				var table = "<h4>已选课程</h4><br><table border='1' align='center'><tr><th>课程号</th><th>课名</th><th>教师</th><th>分数</th></tr>";
+				var table = "<h4>课程</h4><br><table class='hovertable'><tr><th>课程号</th>" + 
+							"<th>课名</th><th>教师</th><th>上课时间</th><th>选课情况</th></tr>";
+	            console.log(data.length);
+	            var message;
+	            for(i = 0; i < data.length; i++){
+	                //json.id
+	                var time = getTime(data[i].weekday, data[i].period);
+	                if(data[i].selected == 0) {
+	                	message = "<input class='button' type=button onclick='selectCourse(" +
+	                			data[i].id + ")' value='选课'>";
+	                } else {
+	                	message = "已选 <input class='button' type=button onclick='deleteCourse(" + 
+	                			data[i].id + ")' value='删除'>";
+	                }
+	            	table += "<tr><td>" + data[i].id + "</td><td>" + data[i].name + 
+	            			"</td><td>" + data[i].teacher_name + "</td><td>" + time +
+	            			"</td><td id=course" + data[i].id + ">" + message + "</td></tr>";
+	        	}
+	            table += "</table>";
+	            console.log(table);
+	            
+	            $("#list_courses").html(table); 
+			}
+        });
+	}
+	
+	function selectedCourses() {
+		var listUrl = "student/course/" + id;
+		$.ajax({
+			type: "GET",
+			url: listUrl,
+			error: function() {
+			    alert("Connection error");
+			},
+			success: function(data) {
+				var table = "<h4>已选课程</h4><br><table class='hovertable'><tr>" + 
+							"<th>课程号</th><th>课名</th><th>教师</th><th>分数</th></tr>";
 	            console.log(data.length);
 	            var message;
 	            for(i=0;i<data.length;i++){
 	            	var score = " ";
 	            	if(data[i].score != 0)
 	            		score = data[i].score;
-	            	table += "<tr><td>"+data[i].course_id+"</td><td>"+data[i].course_name+"</td><td>" + data[i].teacher_name + "</td><td>" + score + "</td></tr>";
+	            	table += "<tr><td>" + data[i].course_id + "</td><td>" +
+	            			data[i].course_name+"</td><td>" + data[i].teacher_name +
+	            			"</td><td>" + score + "</td></tr>";
 	        	}
 	            table += "</table>";
 	            console.log(table);
 	            
-	            $("#main_area").html(table); 
+	            $("#list_courses").html(table); 
 			}
 		});
 	}
 	
 	function deleteCourse(course_id) {
-		var listUrl = "delete/course/0" + id + "/" + course_id;
+		var listUrl = "delete/course/" + id + "/" + course_id;
 		console.log(listUrl);
 		$.ajax({
 			type: "GET",
@@ -152,32 +170,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				alert("Connection error");
 			},
 			success: function(data) {
-				message = "<input type=button onclick='selectCourse(" + data[i].id + ")' value='选课'>";
-				$("#" + course_id).html(message);
+				message = "<input class='button' type=button onclick='selectCourse(" +
+							data[i].id + ")' value='选课'>";
+				$("#course" + course_id).html(message);
 			}
 		});
 	}
 	
-	function changePassword() {
-		$.ajax({
-			type:"POST",
-			url:$("#pass_form").attr("action"),
-			data:$("#pass_form").serialize(),
-			error: function() {
-				alert("Connection error");
-			},
-			success: function(data) {
-				if(data == 1) {
-					$("#pass_form").hide();
-					$("#change_success").html("更改成功");
-				}
-				else if(data == 0) {
-					$("#change_success").html("请输入正确的确认密码");
-				}
-			}
-		})
-	}
-	function uploadPic(form_id, imgFile) {
+/* 	function uploadPic(form_id, imgFile) {
 		console.log(form_id);
 		console.log(imgFile);
 		$.ajaxFileUpload({
@@ -189,7 +189,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				window.location.reload();				
 			}
 		})
-	}
+	} */
 //	});
 </script>
 

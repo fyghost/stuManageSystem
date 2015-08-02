@@ -31,6 +31,7 @@ public class TeacherService {
 		for(Course c: courses) {
 			scoreDAO.deleteScore(c.getId());
 		}
+		System.out.println("Courses deleted");
 		teacherDAO.deleteTeacher(teacher_id);
 	}
 	
@@ -49,4 +50,5 @@ public class TeacherService {
 		return teacherDAO.getTeachers();
 	}
 	
+		
  }

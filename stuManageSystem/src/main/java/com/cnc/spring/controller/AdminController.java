@@ -42,6 +42,7 @@ public class AdminController {
 		student.setId(id);
 		student.setName(name);
 		student.setPassword(id);
+		student.setImg("default.jpg");
 		studentService.addStudent(student);
 		System.out.println(id + ":" + name); 
 		String message = "添加成功";
@@ -58,6 +59,7 @@ public class AdminController {
 		teacher.setId(id);
 		teacher.setName(name);
 		teacher.setPassword(id);
+		teacher.setImg("default.jpg");
 		teacherService.addTeacher(teacher);
 		System.out.println(id + ":" + name); 
 		String message = "添加成功";

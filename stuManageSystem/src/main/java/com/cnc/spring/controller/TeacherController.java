@@ -44,19 +44,32 @@ public class TeacherController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TeacherController.class);
 	@Login(ResultTypeEnum.json)
-	@RequestMapping("course/add/{id}")
-	public @ResponseBody String addCourse(@PathVariable("id") String id, @RequestParam("course_name") String course_name) {
+	@RequestMapping(value="teacher/course/{id}", method=RequestMethod.POST,produces="text/html;charset=utf-8")
+	public @ResponseBody String addCourse(@PathVariable("id") String id, @RequestParam("course_name") String course_name,
+			String weekday, String period) {
 		logger.info("Adding courses");
+		if(courseService.hasCourse(weekday, period)) 
+			return "该时段已经有课程";
 		Course course = new Course();
 		System.out.println(course_name);
 		course.setName(course_name);
+		course.setPeriod(period);
+		course.setWeekday(weekday);
 		courseService.addCourse(id, course);
-		String message = "Course added";
+		String message = "添加成功";
 		return message;
 	}
 	
 	@Login(ResultTypeEnum.json)
-	@RequestMapping("score/set/{id}")
+	@RequestMapping(value="teacher/courses/{id}", method=RequestMethod.GET)
+	public @ResponseBody List<Course> listCourse(@PathVariable("id") String id) {
+		logger.info("Listing the courses");
+		return courseService.listCourses(id);
+		
+	}
+	
+	@Login(ResultTypeEnum.json)
+	@RequestMapping(value="score/set/{id}",produces="text/html;charset=utf-8")
 	public @ResponseBody String setScore(String student_id, int course_id, double score) {
 		logger.info("Setting the grades...");
 		scoreService.updateScore(student_id, course_id, score);
@@ -64,13 +77,7 @@ public class TeacherController {
 		return message;
 	}
 	
-	@Login(ResultTypeEnum.json)
-	@RequestMapping("course/list/{id}")
-	public @ResponseBody List<Course> listCourse(@PathVariable("id") String id) {
-		logger.info("Listing the courses");
-		return courseService.listCourses(id);
-		
-	}
+	
 	
 	@Login(ResultTypeEnum.json)
 	@RequestMapping("student/list/{course_id}")
@@ -105,21 +112,23 @@ public class TeacherController {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("Uploading Teacher Images");
 		if (!file.isEmpty()) {
-			String path = request.getSession().getServletContext().getRealPath("/resources/img/teacher");  //获取本地存储路径
-			System.out.println(path);
+			//String path = request.getSession().getServletContext().getRealPath("/resources/img/teacher");  //获取本地存储路径
+			String path = "D:/apache-tomcat-7.0.55/webapps/resources/img/teacher";
 			String fileName = file.getOriginalFilename();
 			String fileType = fileName.substring(fileName.lastIndexOf("."));
 			Teacher teacher = teacherService.getTeacher(teacher_id);
 
 			String newFileName = "teacher" + teacher.getId() + fileType;
-			String fileLocation = "/resources/img/teacher" + newFileName;
+			String fileLocation = "teacher/" + newFileName;
+			teacher.setImg(fileLocation);
 			File file2 = new File(path, newFileName); //新建一个文件
 			try {
 			    file.getFileItem().write(file2); //将上传的文件写入新建的文件中
 			} catch (Exception e) {
 			    e.printStackTrace();
 			}
-			return "fileLocation";
+			teacherService.updateTeacher(teacher);
+			return "上传成功";
 		}else{
 			return "上传失败";
 		}

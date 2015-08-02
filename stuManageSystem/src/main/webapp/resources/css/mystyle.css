@@ -1,0 +1,144 @@
+/* ------------------------------------------
+ * CSS3 GITHUB BUTTONS (Nicolas Gallagher)
+ * Licensed under Unlicense
+ * http://github.com/necolas/css3-github-buttons
+ * --------------------------------------- */
+
+
+/* =============================================================================
+   Base Button
+   ========================================================================== */
+
+.button {
+    position: relative;
+    overflow: visible;
+    display: inline-block;
+    padding: 0.5em 1em;
+    border: 1px solid #d4d4d4;
+    margin: 0;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 1px 1px 0 #fff;
+    font:11px/normal sans-serif;
+    color: #333;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    background-color: #ececec;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f4f4f4), to(#ececec));
+    background-image: -moz-linear-gradient(#f4f4f4, #ececec);
+    background-image: -ms-linear-gradient(#f4f4f4, #ececec);
+    background-image: -o-linear-gradient(#f4f4f4, #ececec);
+    background-image: linear-gradient(#f4f4f4, #ececec);
+    -moz-background-clip: padding; /* for Firefox 3.6 */
+    background-clip: padding-box;
+    /* border-radius: 0.2em; */
+	border-radius: 50em;
+    /* IE hacks */
+    zoom: 1;
+    *display: inline;
+}
+
+.button:hover, 
+.button:focus,
+.button:active,
+.button.active {
+    border-color: #3072b3;
+    border-bottom-color: #2a65a0;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    color: #fff;
+    background-color: #3c8dde;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#599bdc), to(#3072b3));
+    background-image: -moz-linear-gradient(#599bdc, #3072b3);
+    background-image: -o-linear-gradient(#599bdc, #3072b3);
+    background-image: linear-gradient(#599bdc, #3072b3);
+}
+
+/* overrides extra padding on button elements in Firefox */
+.button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+/* =============================================================================
+   Button icons
+   ========================================================================== */
+
+.button.icon:before {
+    content: "";
+    position: relative;
+    top: 1px;
+    float:left;
+    width: 12px;
+    height: 12px;
+    margin: 0 0.75em 0 -0.25em;
+    background: url(gh-icons.png) 0 99px no-repeat;
+}
+
+/* =============================================================================
+   Button extensions
+   ========================================================================== */
+
+/* Primary button
+   ========================================================================== */
+
+.button.primary {
+    font-weight: bold;
+} 
+
+
+/*----------------------------table---------------------*/
+table.hovertable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+	border-radius: 50em;
+}
+table.hovertable th {
+	background-color:#c3dde0;
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+table.hovertable tr {
+	background-color:#d4e3e5;
+}
+table.hovertable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+/*---------------------others----------------*/
+.text1 {
+	border-radius: 50em;
+	width:100px;
+	border:1px solid #ffffff
+}
+
+.shortselect select {  
+	background:transparent;  
+	height:28px;  
+	width:90px;  
+	line-height:28px;  
+	border:1px solid #ccc;  
+	-moz-border-radius:2px;  
+	-webkit-border-radius:2px;  
+	border-radius:2px;  
+	padding:5px;
+	border-radius: 50em;
+} 
+
+div.mydiv {
+	border-bottom:1px solid #000;
+}
+img.myImg {
+	width:50px;
+	height:50px;
+	border-radius: 50%
+}

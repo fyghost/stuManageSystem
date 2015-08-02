@@ -45,6 +45,7 @@ public class TeacherDAO {
 		Teacher t = getTeacher(teacher.getId());
 		t.setName(teacher.getName());
 		t.setPassword(teacher.getPassword());
+		t.setImg(teacher.getImg());
 		getSession().update(t);
 	}
 	

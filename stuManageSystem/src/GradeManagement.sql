@@ -5,6 +5,7 @@ create table student (
 	id varchar(20) not null, 
 	name varchar(40) not null,
 	password varchar(40),
+	img varchar(40) not null,
 	primary key(id)
 )engine=innodb,default charset=utf8;
 
@@ -12,6 +13,8 @@ create table course (
 	id int not null auto_increment,
 	name varchar(20) not null,
 	teacher_id varchar(20) not null,
+	weekday varchar(20) not null,
+	period varchar(20) not null,
 	primary key(id)
 )engine=innodb,default charset=utf8;
 
@@ -33,6 +36,7 @@ create table teacher (
 	id varchar(20) not null,
 	name varchar(40) not null,
 	password varchar(20) not null,
+	img varchar(40) not null default 'bgimg.jpg',
 	primary key(id)
 )engine=innodb, default charset=utf8;
 
@@ -52,3 +56,9 @@ alter table course
 	add constraint FK_ID3
 	foreign key (teacher_id)
 	references teacher(id) on delete cascade;
+
+alter table course
+	add constraint UNIQUE_UNI1
+	unique key(weekday, period);
+
+insert into admin values ('admin', 'admin');

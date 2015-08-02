@@ -93,14 +93,16 @@ public class StudentController {
 			Student student = studentService.getStudent(student_id);
 
 			String newFileName = "student" + student.getId() + fileType;
-			String fileLocation = "/resources/img/student" + newFileName;
+			String fileLocation = "student/" + newFileName;
+			student.setImg(fileLocation);
 			File file2 = new File(path, newFileName); //新建一个文件
 			try {
 			    file.getFileItem().write(file2); //将上传的文件写入新建的文件中
 			} catch (Exception e) {
 			    e.printStackTrace();
 			}
-			return "fileLocation";
+			studentService.updateStudent(student);
+			return "上传成功";
 		}else{
 			return "上传失败";
 		}

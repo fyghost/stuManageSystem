@@ -41,14 +41,13 @@ public class StudentDAOImpl implements StudentDAO {
 
 	@Override
 	public void updateStudent(Student student) {
-		String id = student.getId();
-		String name = student.getName();
-		String password = student.getPassword();
-		Query query = getSession().createQuery("update Student t set t.name=?, t.password=? where t.id=?");
-		query.setString(0, name);
-		query.setString(1, password);
-		query.setString(2, id);
-		query.executeUpdate();
+		Student s = getStudent(student.getId());
+		s.setName(student.getName());
+		s.setPassword(s.getPassword());
+		if(student.getImg() != null) {
+			s.setImg(student.getImg());
+		}
+		getSession().update(s);
 	}
 	
 	@Override

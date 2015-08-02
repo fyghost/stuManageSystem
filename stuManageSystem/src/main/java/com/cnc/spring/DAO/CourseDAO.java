@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
@@ -39,6 +40,8 @@ public class CourseDAO {
 		Course c = getCourse(course.getId());
 		c.setName(course.getName());
 		c.setTeacher(course.getTeacher());
+		c.setPeriod(course.getPeriod());
+		c.setWeekday(course.getWeekday());
 		getSession().update(c);
 	}
 	
@@ -48,5 +51,12 @@ public class CourseDAO {
 	
 	public List<Course> getCourses(String teacher_id) {
 		return getSession().createQuery("from Course where teacher_id=" + teacher_id).list();
+	}
+	
+	public List<Course> getCourse(String weekday, String period) {
+		Query q = getSession().createQuery("from Course where weekday=? and period=?");
+		q.setString(0, weekday);
+		q.setString(1, period);
+		return q.list();
 	}
 }

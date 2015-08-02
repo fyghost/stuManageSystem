@@ -17,6 +17,7 @@ public class Teacher {
 	private String id;
 	private String name;
 	private String password;
+	private String img;
 	private Set<Course> courses = new HashSet<Course>();
 	
 	@Id
@@ -47,6 +48,12 @@ public class Teacher {
 	}
 	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	
 	

@@ -50,7 +50,7 @@ public class CompositeService {
 	public List<Course> listCourseNotSelected(String student_id) {
 		List<Course> courses = listCourses();
 		for(Course c: courses) {
-			if(!scoreDAO.isSelected(student_id, c.getId()))
+			if(!scoreDAO.isSelected(student_id, c.getId()))//区分开选上和未选上的课程
 				c.setSelected((short)0);
 		}
 		return courses;

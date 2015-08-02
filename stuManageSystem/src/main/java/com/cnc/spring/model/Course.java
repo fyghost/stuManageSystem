@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,8 +25,10 @@ public class Course implements Serializable {
 	private int id;
 	private String name;
 	private Teacher teacher;
+	private String weekday;
+	private String period;
 	private String teacher_name;
-	private short selected = 1;
+	private short selected = 1;//用这个参数来区分开页面上显示的选上和未选的课程。
 	private Set<Score> scores = new HashSet<Score>();
 	
 	@Id
@@ -61,6 +65,19 @@ public class Course implements Serializable {
 	public void setScores(Set<Score> scores) {
 		this.scores = scores;
 	}
+	public String getWeekday() {
+		return weekday;
+	}
+	public void setWeekday(String weekday) {
+		this.weekday = weekday;
+	}
+	public String getPeriod() {
+		return period;
+	}
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+	
 	@Transient
 	public String getTeacher_name() {
 		return teacher_name;
@@ -75,4 +92,6 @@ public class Course implements Serializable {
 	public void setSelected(short selected) {
 		this.selected = selected;
 	}
+	
+	
 }

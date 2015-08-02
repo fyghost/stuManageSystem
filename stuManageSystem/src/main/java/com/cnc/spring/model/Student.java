@@ -20,6 +20,7 @@ public class Student implements Serializable {
 	private String id;
 	private String name;
 	private String password;
+	private String img;
 	private Set<Score> scores = new HashSet<Score>();
 	
 	@Id
@@ -53,6 +54,13 @@ public class Student implements Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	
 	

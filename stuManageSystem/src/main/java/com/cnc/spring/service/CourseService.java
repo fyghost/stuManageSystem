@@ -49,5 +49,12 @@ public class CourseService {
 		return courseDAO.getCourses(teacher_id);
 	}
 	
+	@Transactional
+	public boolean hasCourse(String weekday, String period) {
+		List<Course> courses = courseDAO.getCourse(weekday, period);
+		if(courses.size() == 0)
+			return false;
+		return true;
+	}
 	
 }
