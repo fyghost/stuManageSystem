@@ -58,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<form action="student/picture/${student.id }" style="display:none" id="pic_form"method="post" enctype="multipart/form-data">  
 			上传头像<br>
 			<table class="hovertable">
-				<tr><td><input name="imgFile" id="img_file" type="file" /></td></tr>
+				<tr><td><a class="file"><input name="imgFile" id="img_file" type="file" >点击上传</a></td></tr>
 				<tr><td><input class="button"type="button" onclick="uploadPic('pic_form', 'img_file')" value="确定"/></td></tr>
 			</table> 
 		</form>  
@@ -91,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			success: function(data) {
 				message = "已选 <input class='button' type=button onclick='deleteCourse(" +
 						course_id + ")' value='删除'>";
-				$("#" + course_id).html(message);
+				$("#course" + course_id).html(message);
 			}
 		});
 	}
@@ -124,6 +124,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            			"</td><td id=course" + data[i].id + ">" + message + "</td></tr>";
 	        	}
 	            table += "</table>";
+	            table += "<label id='select_success'></label>"
 	            console.log(table);
 	            
 	            $("#list_courses").html(table); 
@@ -171,7 +172,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			},
 			success: function(data) {
 				message = "<input class='button' type=button onclick='selectCourse(" +
-							data[i].id + ")' value='选课'>";
+							course_id + ")' value='选课'>";
 				$("#course" + course_id).html(message);
 			}
 		});

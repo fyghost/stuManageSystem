@@ -36,7 +36,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		HttpSession session = request.getSession();
 		String user = (String)session.getAttribute("user");
-		if(user == null) {
+		if(user == null || user.length() == 0) {
 			log.info("Intercepting th URL-------No authority");
 			if(login.value() == ResultTypeEnum.page) {
 				request.getRequestDispatcher("/login").forward(request, response);

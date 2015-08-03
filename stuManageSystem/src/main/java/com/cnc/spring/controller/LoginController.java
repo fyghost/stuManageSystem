@@ -37,7 +37,7 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@RequestMapping(value={"login", "/"})
-	public String login() {
+	public String login(HttpServletRequest req) {
 		logger.info("Login page");
 		return "login";
 	}

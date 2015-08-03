@@ -125,7 +125,7 @@
 			<p>上传头像</p>
 			<table class="hovertable"> 
 				
-				<tr><td><input name="imgFile" id="img_file" type="file" /></td></tr>
+				<tr><td><a class="file"><input name="imgFile" id="img_file" type="file" >点击上传</a></td></tr>
 				<tr><td><input type="button" class="button" onclick="uploadPic('pic_form', 'img_file')" value="确定"/></td></tr> 
 				<!-- <input type="submit" value="确定"/>  -->
 			</table>

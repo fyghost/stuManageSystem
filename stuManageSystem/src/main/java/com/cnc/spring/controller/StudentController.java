@@ -86,7 +86,8 @@ public class StudentController {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("Uploading Images");
 		if (!file.isEmpty()) {
-			String path = request.getSession().getServletContext().getRealPath("/resources/img/student");  //获取本地存储路径
+			//String path = request.getSession().getServletContext().getRealPath("/resources/img/student");  //获取本地存储路径
+			String path = "D:/apache-tomcat-7.0.55/webapps/resources/img/student";
 			System.out.println(path);
 			String fileName = file.getOriginalFilename();
 			String fileType = fileName.substring(fileName.lastIndexOf("."));
