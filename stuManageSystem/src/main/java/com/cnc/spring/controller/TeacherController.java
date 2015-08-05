@@ -116,6 +116,9 @@ public class TeacherController {
 			String path = "D:/apache-tomcat-7.0.55/webapps/resources/img/teacher";
 			String fileName = file.getOriginalFilename();
 			String fileType = fileName.substring(fileName.lastIndexOf("."));
+			boolean legal = fileType.equals("jpg") || fileType.equals("bmp") || fileType.equals("jpeg") || fileType.equals("gif");
+			if(! legal)
+				return "请上传正确的图片格式";
 			Teacher teacher = teacherService.getTeacher(teacher_id);
 
 			String newFileName = "teacher" + teacher.getId() + fileType;

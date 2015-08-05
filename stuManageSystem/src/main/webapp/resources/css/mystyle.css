@@ -86,7 +86,38 @@
 .button.primary {
     font-weight: bold;
 } 
+/* Danger button
+   ========================================================================== */
 
+.button.danger {
+    color: #900;
+}
+
+.button.danger:hover,
+.button.danger:focus,
+.button.danger:active {
+    border-color: #b53f3a;
+    border-bottom-color: #a0302a;
+    color: #fff;
+    background-color: #dc5f59;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#dc5f59), to(#b33630));
+    background-image: -moz-linear-gradient(#dc5f59, #b33630);
+    background-image: -ms-linear-gradient(#dc5f59, #b33630);
+    background-image: -o-linear-gradient(#dc5f59, #b33630);
+    background-image: linear-gradient(#dc5f59, #b33630);
+}
+
+.button.danger:active,
+.button.danger.active {
+    border-color: #a0302a;
+    border-bottom-color: #bf4843;
+    background-color: #b33630;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b33630), to(#dc5f59));
+    background-image: -moz-linear-gradient(#b33630, #dc5f59);
+    background-image: -ms-linear-gradient(#b33630, #dc5f59);
+    background-image: -o-linear-gradient(#b33630, #dc5f59);
+    background-image: linear-gradient(#b33630, #dc5f59);
+}
 
 /*----------------------------table---------------------*/
 table.hovertable {
@@ -114,6 +145,36 @@ table.hovertable td {
 	border-style: solid;
 	border-color: #a9c6c9;
 }
+/* table.hovertable td.paging a{
+	border: 1px solid #eee; 
+	color: #444; 
+	margin: 4px; 
+	padding: 2px 7px; 
+	text-decoration: none; 
+	text-align:center;
+} */
+
+a:focus {outline: none;}
+table, th, td {font: 12px Arial,Helvetica,sans-serif,'宋体';margin: 0;padding: 0}
+table{border-spacing: 0;border-collapse: collapse;}
+.datatable {width: 100%;border-style: none;background-color: #fff;margin-bottom: 20px;text-align: left;}
+.datatable th, .datatable td { padding: 5px;line-height: 30px}
+.datatable thead th {background-color: #eee;margin: 0;text-align: left;border-top: 1px solid #cfcfcf;border-bottom: 1px solid #cfcfcf;font-weight: 500}
+.datatable tbody td {background-color: #fff;border-bottom: 1px solid #ddd;table-layout:fixed;word-break:break-all;font-weight: 400}
+.datatable tbody tr.evenrow td {
+	background-color: #f4f4f4;
+}
+.datatable tfoot td {
+	background-color: #fafafa;
+	text-align: right;
+	border-bottom: 1px solid #cfcfcf;
+}
+    /*表格分页列表*/
+.datatable td.paging a {border: 1px solid #eee; color: #444; margin: 4px; padding: 2px 7px; text-decoration: none; text-align:center;}
+    /*表格分页当前页*/
+.datatable td.paging a.current {background: #eee; border: 1px solid #CFCFCF; color: #444; font-weight: bold;}
+.datatable td.paging a.current{border: 0;cursor: auto;background:none}
+
 /*---------------------others----------------*/
 .text1 {
 	border-radius: 50em;

@@ -13,6 +13,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="resources/css/style.css">
 <link href="resources/css/mystyle.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="resources/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+	function errorButton() {
+		$("#error_buttons").toggle("middle");
+	}
+</script>
 <title>登录</title>
 </head>
 <body>
@@ -41,5 +47,14 @@
 			</p>
 		</div>
 	</section>
+	<div align="left">
+		<button class="button primary" onclick="errorButton()">点这里点这里</button><br>
+	</div>
+	<div id="error_buttons"align="left" style="display:none" id="error_buttons">
+		<a href="user/login/exception/1" class="button danger">找不到页面！！</a><br>
+		<a href="user/login/exception/2" class="button danger">找不到对象！！</a><br>
+		<a href="user/login/exception/3" class="button danger">找不到错误！！</a><br>
+		
+	</div>
 </body>
 </html>

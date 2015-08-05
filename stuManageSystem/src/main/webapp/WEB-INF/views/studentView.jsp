@@ -18,15 +18,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var id = '${student.id}';
 	
 	function changePass() {
-		$("#pass_form").show();
+		$("#pass_form").show(200);
 		$("#pic_form").hide();
 	}
 	function changePic() {
 		$("#pass_form").hide();
-		$("#pic_form").show();
+		$("#pic_form").show(200);
 	}
 	function setting() {
-		$("#settings").show();
+		$("#settings").show(200);
 	}
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=GB18030">
@@ -43,11 +43,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<a onclick="listCourses()" class="button pill">查看所有课程</a><br />
 		<a onclick="selectedCourses()" class="button pill">查看已选课程</a><br/>
 	</div>
-	<div id="list_courses" style="float:left; margin-left:20px">
+	<div id="list_courses" style="display:none;float:left; margin-left:20px">
 	</div>
 	
 	<div style="float:right; margin-left:20px">
 		<button class="button" onclick="setting()">个人设置</button><br>
+		<label id="upload_result"></label>
 		<a class="button" href="login" >回到主页</a>
 	</div>
 	<div id="settings"style="display:none;float:right; margin-left:20px">
@@ -97,6 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	
 	function listCourses() {
+		$("#list_courses").hide(); 
 		var listUrl = "student/courses/" + id;
 		$.ajax({
 			type: "GET",
@@ -128,11 +130,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            console.log(table);
 	            
 	            $("#list_courses").html(table); 
+	            $("#list_courses").show(200); 
 			}
         });
 	}
 	
 	function selectedCourses() {
+		$("#list_courses").hide(); 
 		var listUrl = "student/course/" + id;
 		$.ajax({
 			type: "GET",
@@ -157,6 +161,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            console.log(table);
 	            
 	            $("#list_courses").html(table); 
+	            $("#list_courses").show(200); 
 			}
 		});
 	}

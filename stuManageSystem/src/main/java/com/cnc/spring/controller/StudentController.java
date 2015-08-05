@@ -1,9 +1,7 @@
 package com.cnc.spring.controller;
 
 import java.io.File;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -91,8 +89,10 @@ public class StudentController {
 			System.out.println(path);
 			String fileName = file.getOriginalFilename();
 			String fileType = fileName.substring(fileName.lastIndexOf("."));
+			boolean legal = fileType.equals("jpg") || fileType.equals("bmp") || fileType.equals("jpeg") || fileType.equals("gif");
+			if(! legal)
+				return "请上传正确的图片格式";
 			Student student = studentService.getStudent(student_id);
-
 			String newFileName = "student" + student.getId() + fileType;
 			String fileLocation = "student/" + newFileName;
 			student.setImg(fileLocation);

@@ -1,11 +1,15 @@
 package com.cnc.spring.controller;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +22,6 @@ import com.cnc.spring.model.Teacher;
 import com.cnc.spring.service.AdminService;
 import com.cnc.spring.service.StudentService;
 import com.cnc.spring.service.TeacherService;
-import com.cnc.spring.validation.Login;
 
 /*
  * 登录管理，根据不同的用户转到不同的页面
@@ -103,4 +106,19 @@ public class LoginController {
 			return mav;
 		}
 	}
+	
+	@RequestMapping("user/login/exception/{id}")
+	public void exceptionExample(@PathVariable("id") int id) throws Exception {
+		logger.info("Exception Handling");
+		if(id == 1) {
+			throw new IOException();
+		}
+		if(id == 2) {
+			throw new SQLException();
+		}
+		if(id == 3) {
+			throw new Exception("Generic Exception");
+		}
+	}
+	
 }

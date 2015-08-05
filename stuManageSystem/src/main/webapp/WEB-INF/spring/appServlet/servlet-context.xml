@@ -32,11 +32,21 @@
      
     <!-- Configure bean to convert JSON to POJO and vice versa -->
     <beans:bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+    	<beans:property name="supportedMediaTypes">
+    		<beans:list>
+    			<beans:value>text/html;charset=UTF-8</beans:value>
+    		</beans:list>
+    	</beans:property>
     </beans:bean> 
 	
-	<context:component-scan base-package="com.cnc.spring.controller" />
+	<context:component-scan base-package="com.cnc.spring" />
 	
 	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="*.js"/>
+			<beans:bean class="com.cnc.spring.interceptor.LoginInterceptor"></beans:bean>
+		</interceptor>
 		<beans:bean class="com.cnc.spring.interceptor.LoginInterceptor"></beans:bean>
 	</interceptors>
 	
@@ -53,10 +63,18 @@
    <beans:bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">    
        <beans:property name="exceptionMappings">    
            <beans:props>    
-               <!-- 遇到MaxUploadSizeExceededException异常时，跳转到/page/html/errorGolbal.html页面 -->    
-               <beans:prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/views/login.jsp</beans:prop>    
+               <!-- 遇到MaxUploadSizeExceededException异常时，跳转到/views/login.jsp页面 -->    
+               <beans:prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">../../views/login.jsp</beans:prop>    
            </beans:props>    
        </beans:property>    
 	</beans:bean>	
 	
+	<beans:bean id="simpleMappingExceptionResolver" class="com.cnc.spring.handler.ExceptionHandler">
+        <beans:property name="exceptionMappings">
+            <beans:map>
+                <beans:entry key="Exception" value="generic_error"></beans:entry>
+            </beans:map>
+        </beans:property>
+        <beans:property name="defaultErrorView" value="generic_error"/>
+    </beans:bean>
 </beans:beans>

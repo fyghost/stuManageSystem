@@ -77,7 +77,7 @@ function uploadPic(form_id, imgFile) {
 		fileElementId: imgFile,
 		dataType: 'text',
 		success: function(data) {
-			window.location.reload();				
+			window.location.reload();
 		}
 	})
 }
