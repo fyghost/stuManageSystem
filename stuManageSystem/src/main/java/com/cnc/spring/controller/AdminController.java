@@ -36,34 +36,16 @@ public class AdminController {
 	@RequestMapping(value="user/add", params="user=student", method=RequestMethod.POST, produces="text/htm;charset=UTF-8")
 	public @ResponseBody String addStudent(@RequestParam("id") String id, @RequestParam("name") String name) {
 		logger.info("adding a new student");
-		if(studentService.getStudent(id) != null)
-			return "该用户已经存在！！";
-		Student student = new Student();
-		student.setId(id);
-		student.setName(name);
-		student.setPassword(id);
-		student.setImg("default.jpg");
-		studentService.addStudent(student);
-		System.out.println(id + ":" + name); 
-		String message = "添加成功";
-		return message;
+		
+		return studentService.addStudent(id, name);
 	}
 	
 	@Login(ResultTypeEnum.json)
 	@RequestMapping(value="user/add", params={"user=teacher"}, method=RequestMethod.POST,  produces = "text/html;charset=UTF-8")
 	public @ResponseBody String addTeacher(@RequestParam("id") String id, @RequestParam("name") String name) {
 		logger.info("adding a new teacher");
-		if(teacherService.getTeacher(id) != null)
-			return "该用户已经存在！！";
-		Teacher teacher = new Teacher();
-		teacher.setId(id);
-		teacher.setName(name);
-		teacher.setPassword(id);
-		teacher.setImg("default.jpg");
-		teacherService.addTeacher(teacher);
-		System.out.println(id + ":" + name); 
-		String message = "添加成功";
-		return message;
+		
+		return teacherService.addTeacher(id, name);
 	}
 	
 	@Login(ResultTypeEnum.json)
@@ -71,8 +53,8 @@ public class AdminController {
 	public @ResponseBody List<Student> listStudents() {
 		logger.info("listing students");
 		List<Student> students = studentService.getStudents();
-//		for(Student s: students)
-//			System.out.println(s.getId() + ":" + s.getName() + ":" + s.getPassword());
+		for(Student s: students)
+			System.out.println(s.getId() + ":" + s.getName() + ":" + s.getPassword());
 		return students;
 //		return students.get(0);
 	}
@@ -91,23 +73,13 @@ public class AdminController {
 	@RequestMapping("teacher/delete/{id}")
 	public @ResponseBody String deleteTeacher(@PathVariable("id") String teacher_id) {
 		logger.info("deleting teacher");
-		Teacher teacher = teacherService.getTeacher(teacher_id);
-		if(teacher == null) 
-			return "No such teacher";
-		teacherService.deleteTeacher(teacher_id);
-		String message = "Teacher deleted";
-		return message;
+		return teacherService.deleteTeacher(teacher_id);
 	}
 	
 	@Login(ResultTypeEnum.json)
-	@RequestMapping("student/delete/{id}")
+	@RequestMapping(value="student/delete/{id}", produces="text/html;charset=UTF-8")
 	public @ResponseBody String deleteStudent(@PathVariable("id") String student_id) {
 		logger.info("deleting teacher");
-		Student student = studentService.getStudent(student_id);
-		if(student == null) 
-			return "No such student";
-		studentService.deleteStudent(student_id);
-		String message = "Student deleted";
-		return message;
+		return studentService.deleteStudent(student_id);
 	}
 }

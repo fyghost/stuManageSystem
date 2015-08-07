@@ -48,16 +48,7 @@ public class TeacherController {
 	public @ResponseBody String addCourse(@PathVariable("id") String id, @RequestParam("course_name") String course_name,
 			String weekday, String period) {
 		logger.info("Adding courses");
-		if(courseService.hasCourse(weekday, period)) 
-			return "该时段已经有课程";
-		Course course = new Course();
-		System.out.println(course_name);
-		course.setName(course_name);
-		course.setPeriod(period);
-		course.setWeekday(weekday);
-		courseService.addCourse(id, course);
-		String message = "添加成功";
-		return message;
+		return courseService.addCourse(id, weekday, period, course_name);
 	}
 	
 	@Login(ResultTypeEnum.json)
@@ -113,25 +104,25 @@ public class TeacherController {
 		logger.info("Uploading Teacher Images");
 		if (!file.isEmpty()) {
 			//String path = request.getSession().getServletContext().getRealPath("/resources/img/teacher");  //获取本地存储路径
-			String path = "D:/apache-tomcat-7.0.55/webapps/resources/img/teacher";
+//			String path = "D:/apache-tomcat-7.0.55/webapps/resources/img/teacher";
 			String fileName = file.getOriginalFilename();
 			String fileType = fileName.substring(fileName.lastIndexOf("."));
 			boolean legal = fileType.equals("jpg") || fileType.equals("bmp") || fileType.equals("jpeg") || fileType.equals("gif");
 			if(! legal)
 				return "请上传正确的图片格式";
-			Teacher teacher = teacherService.getTeacher(teacher_id);
-
-			String newFileName = "teacher" + teacher.getId() + fileType;
-			String fileLocation = "teacher/" + newFileName;
-			teacher.setImg(fileLocation);
-			File file2 = new File(path, newFileName); //新建一个文件
-			try {
-			    file.getFileItem().write(file2); //将上传的文件写入新建的文件中
-			} catch (Exception e) {
-			    e.printStackTrace();
-			}
-			teacherService.updateTeacher(teacher);
-			return "上传成功";
+//			Teacher teacher = teacherService.getTeacher(teacher_id);
+//
+//			String newFileName = "teacher" + teacher.getId() + fileType;
+//			String fileLocation = "teacher/" + newFileName;
+//			teacher.setImg(fileLocation);
+//			File file2 = new File(path, newFileName); //新建一个文件
+//			try {
+//			    file.getFileItem().write(file2); //将上传的文件写入新建的文件中
+//			} catch (Exception e) {
+//			    e.printStackTrace();
+//			}
+//			teacherService.updateTeacher(teacher);
+			return teacherService.changePic(file, fileType, teacher_id);
 		}else{
 			return "上传失败";
 		}

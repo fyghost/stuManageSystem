@@ -14,9 +14,13 @@
 
 
 <script type="text/javascript">
+	$(function() {
+		$("#main_area").hide();
+		$("#list_user").hide();
+	})
 	function addU() {
 		$("#list_user").hide();
-		$("#main_area").show();
+		$("#main_area").toggle("middle");
 	}
 </script>
 
@@ -35,7 +39,7 @@
 	<button class="button" onclick="listStudent()">删除学生</button>
 	<button class="button" onclick="listTeacher()">删除老师</button>
 	<br />
-	<div id="main_area" style="display: none" align="center">
+	<div id="main_area" align="center">
 		<form action="user/add" id="addUser" method="post">
 			<table class="hovertable">
 				<tr>
@@ -58,7 +62,7 @@
 		<label id="add_success"></label>
 	</div>
 	
-	<div id="list_user"></div>
+	<div id="list_user" align="center"></div>
 	<div align="right">
 		<a class="button" href="login">回到主页</a>
 	</div>
@@ -83,7 +87,7 @@
 
 		function listStudent() {
 			$("#main_area").hide();
-			$("#list_user").show();
+			$("#list_user").hide();
 			$.ajax({
 				type : "GET",
 				url : "student/list",
@@ -107,12 +111,15 @@
 					console.log(table);
 
 					$("#list_user").html(table);
+					
+					
 				}
 			});
+			$("#list_user").toggle("middle");
 		}
 		function listTeacher() {
 			$("#main_area").hide();
-			$("#list_user").show();
+			$("#list_user").hide();
 			$.ajax({
 				type : "GET",
 				url : "teacher/list",
@@ -137,6 +144,7 @@
 					$("#list_user").html(table);
 				}
 			});
+			$("#list_user").toggle("middle");
 		}
 		function deleteTeacher(id) {
 			$.ajax({

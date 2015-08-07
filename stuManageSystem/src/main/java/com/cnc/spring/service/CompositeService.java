@@ -30,10 +30,13 @@ public class CompositeService {
 	private ScoreDAO scoreDAO;
 	
 	@Transactional
-	public void selectCourse(String student_id, int course_id) {
+	public String selectCourse(String student_id, int course_id) {
 		Course c = courseDAO.getCourse(course_id);
 		Student s = studentDAO.getStudent(student_id);
+		if(courseDAO.hasCourseOfStudent(student_id, c.getWeekday(), c.getPeriod()))
+			return "该时段已经有课程";
 		scoreDAO.saveScoreItem(s, c);
+		return "选课成功";
 	}
 	
 	@Transactional

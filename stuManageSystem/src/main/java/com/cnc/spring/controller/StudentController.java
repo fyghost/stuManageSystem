@@ -50,7 +50,7 @@ public class StudentController {
 	
 	@Login(ResultTypeEnum.json)
 	@RequestMapping("select/course/{student_id}/{course_id}")
-	public @ResponseBody String addCourse(@PathVariable("student_id")String student_id, @PathVariable("course_id")int course_id) {
+	public @ResponseBody String selectCourse(@PathVariable("student_id")String student_id, @PathVariable("course_id")int course_id) {
 		logger.info("Adding Course");
 		compositeService.selectCourse(student_id, course_id);
 		String message = "success";
@@ -70,11 +70,9 @@ public class StudentController {
 	public @ResponseBody int changePass(@PathVariable("student_id") String student_id, String passwordNew, String passwordConfirm) {
 		if(!passwordNew.equals(passwordConfirm))
 			return 0;
-		else if(passwordNew == null || passwordNew == "")
+		else if(passwordNew == null || passwordNew.length() == 0)
 			return 0;
-		Student student = studentService.getStudent(student_id);
-		student.setPassword(passwordNew);
-		studentService.updateStudent(student);
+		studentService.changePass(student_id, passwordNew);
 		return 1;
 	}
 	
@@ -85,27 +83,26 @@ public class StudentController {
 		logger.info("Uploading Images");
 		if (!file.isEmpty()) {
 			//String path = request.getSession().getServletContext().getRealPath("/resources/img/student");  //获取本地存储路径
-			String path = "D:/apache-tomcat-7.0.55/webapps/resources/img/student";
-			System.out.println(path);
+			//String path = "D:/apache-tomcat-7.0.55/webapps/resources/img/student";
 			String fileName = file.getOriginalFilename();
 			String fileType = fileName.substring(fileName.lastIndexOf("."));
 			boolean legal = fileType.equals("jpg") || fileType.equals("bmp") || fileType.equals("jpeg") || fileType.equals("gif");
 			if(! legal)
 				return "请上传正确的图片格式";
-			Student student = studentService.getStudent(student_id);
-			String newFileName = "student" + student.getId() + fileType;
-			String fileLocation = "student/" + newFileName;
-			student.setImg(fileLocation);
-			File file2 = new File(path, newFileName); //新建一个文件
-			try {
-			    file.getFileItem().write(file2); //将上传的文件写入新建的文件中
-			} catch (Exception e) {
-			    e.printStackTrace();
-			}
-			studentService.updateStudent(student);
-			return "上传成功";
+//			Student student = studentService.getStudent(student_id);
+//			String newFileName = "student" + student.getId() + fileType;
+//			String fileLocation = "student/" + newFileName;
+//			student.setImg(fileLocation);
+//			File file2 = new File(path, newFileName); //新建一个文件
+//			try {
+//			    file.getFileItem().write(file2); //将上传的文件写入新建的文件中
+//			} catch (Exception e) {
+//			    e.printStackTrace();
+//			}
+//			studentService.updateStudent(student);
+			return studentService.changePic(file, fileType, student_id);
 		}else{
-			return "上传失败";
+			return "请选择图片";
 		}
 	}
 }

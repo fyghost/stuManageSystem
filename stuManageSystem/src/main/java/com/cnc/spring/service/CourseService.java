@@ -1,6 +1,7 @@
 package com.cnc.spring.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -26,10 +27,20 @@ public class CourseService {
 	private TeacherDAO teacherDAO;
 	
 	@Transactional
-	public void addCourse(String teacher_id, Course course) {
+	public String addCourse(String teacher_id, String weekday, String period, String course_name) {
+		//List<Course> courses = courseDAO.getCourse(weekday, period);
+		if(courseDAO.hasCourseOfTeacher(teacher_id, weekday, period)) {
+			System.out.println("Wrong time Added");
+			return "该时段已经有课程";
+		}
+		Course course = new Course();
+		course.setName(course_name);
+		course.setPeriod(period);
+		course.setWeekday(weekday);
 		Teacher teacher = teacherDAO.getTeacher(teacher_id);
 		course.setTeacher(teacher);
 		courseDAO.addCourse(course);
+		return "添加成功";
 	}
 	@Transactional
 	public void updateCourse(Course course) {
@@ -47,14 +58,6 @@ public class CourseService {
 	@Transactional
 	public List<Course> listCourses(String teacher_id) {
 		return courseDAO.getCourses(teacher_id);
-	}
-	
-	@Transactional
-	public boolean hasCourse(String weekday, String period) {
-		List<Course> courses = courseDAO.getCourse(weekday, period);
-		if(courses.size() == 0)
-			return false;
-		return true;
 	}
 	
 }

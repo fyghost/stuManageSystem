@@ -14,29 +14,25 @@
 <link href="resources/css/mystyle.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
+	$(function() {
+		$("#add_course").hide();
+	})
 	var id = '${teacher.id}';
-	var count = true;
 	function addC() {
 		$("#list_course").hide();
-		if(count){
-			$("#add_course").show();
-			
-		} else {
-			$("#add_course").hide();
-		}
-		count = !count;	
+		$("#add_course").toggle("middle");
 	}
 	function setting() {
-		$("#settings").show();
+		$("#settings").show(200);
 	}
 	
 	function changePass() {
-		$("#pass_form").show();
+		$("#pass_form").show(200);
 		$("#pic_form").hide();
 	}
 	function changePic() {
 		$("#pass_form").hide();
-		$("#pic_form").show();
+		$("#pic_form").show(200);
 	}
 	function updateScore(i, id) {
 		var message = "<input id='score" + i + "' type='text' name='" + id + "' />";
@@ -59,7 +55,7 @@
 		<button onclick="addC()" class="button">添加课程</button><br>
 		<button onclick="listCourses()" class="button">查看课程</button><br>
 	</div>
-	<div id="add_course"  style="display:none;float:left;margin-left:20px">
+	<div id="add_course"  style="float:left;margin-left:20px">
 		<form action="teacher/course/${teacher.id}"  id="add_form" method="post">
 			<table class="hovertable">
 				<tr>
@@ -157,7 +153,7 @@
 		count=true;
 		var listUrl = "teacher/courses/" + id;
 		$("#add_course").hide();
-		$("#list_course").show();
+		
 		$("#list_student").html("");
 		$.ajax({
 			type: "GET",
@@ -180,11 +176,12 @@
 	            console.log(table);
 	            
 	            $("#list_course").html(table); 
+	            $("#list_course").show(200);
 			}
 	    });
 	}
 	function listStudents(course_id, course_name) {
-		$("#list_student").show();
+		
 		s_id = course_id;
 		s_name = course_name;
 		var listUrl = "student/list/" + course_id;
@@ -217,6 +214,7 @@
 				}
 			 	console.log(table);
 	            $("#list_student").html(table);
+	            $("#list_student").show(200);
 			}
         });
 	}

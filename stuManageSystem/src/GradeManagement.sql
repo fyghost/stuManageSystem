@@ -57,8 +57,4 @@ alter table course
 	foreign key (teacher_id)
 	references teacher(id) on delete cascade;
 
-alter table course
-	add constraint UNIQUE_UNI1
-	unique key(weekday, period);
-
 insert into admin values ('admin', 'admin');

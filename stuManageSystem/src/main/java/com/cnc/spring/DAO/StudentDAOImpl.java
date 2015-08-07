@@ -21,7 +21,7 @@ public class StudentDAOImpl implements StudentDAO {
 	}
 	
 	@Override
-	public void saveStudent(Student student) {
+	public void addStudent(Student student) {
 		getSession().save(student);
 	}
 
