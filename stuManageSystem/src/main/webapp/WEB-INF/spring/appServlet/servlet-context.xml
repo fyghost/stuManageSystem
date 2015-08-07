@@ -41,9 +41,9 @@
 	
 	<context:component-scan base-package="com.cnc.spring" />
 	
-<!-- 	<interceptors>
+	<interceptors>
 		<beans:bean class="com.cnc.spring.interceptor.LoginInterceptor"></beans:bean>
-	</interceptors> -->
+	</interceptors>
 	
 	<!-- SpringMVC上传文件时，需要配置MultipartResolver处理器 -->    
    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">    
@@ -64,12 +64,12 @@
        </beans:property>    
 	</beans:bean>	
 	
-	<!-- <beans:bean id="simpleMappingExceptionResolver" class="com.cnc.spring.handler.ExceptionHandler">
+	<beans:bean id="simpleMappingExceptionResolver" class="com.cnc.spring.handler.ExceptionHandler">
         <beans:property name="exceptionMappings">
             <beans:map>
                 <beans:entry key="Exception" value="generic_error"></beans:entry>
             </beans:map>
         </beans:property>
         <beans:property name="defaultErrorView" value="generic_error"/>
-    </beans:bean> -->
+    </beans:bean>
 </beans:beans>
